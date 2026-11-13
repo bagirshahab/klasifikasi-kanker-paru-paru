@@ -4,7 +4,8 @@
 // Jika frontend & backend terpisah, isi dengan URL backend, mis:
 //   const API_BASE = "http://localhost:8000";
 // ---------------------------------------------------------------------------
-const API_BASE = "";
+// Nilai diambil dari config.js (window.API_BASE).
+const API_BASE = (window.API_BASE || "").replace(/\/+$/, "");
 
 const CLASS_INFO = {
   Normal: {

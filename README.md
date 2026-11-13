@@ -195,3 +195,34 @@ git commit -m "Add model weights via LFS"
 
 Alat ini untuk keperluan **riset dan edukasi**. Hasil klasifikasi **bukan
 diagnosis medis** dan tidak menggantikan penilaian ahli patologi.
+
+---
+
+## 8. Deploy: Frontend di Vercel + Backend di Hugging Face Spaces
+
+Vercel tidak bisa menjalankan backend ini (PyTorch melebihi batas ukuran fungsi
+dan SQLite tidak bisa ditulis). Karena itu hosting dipisah:
+
+**A. Backend → Hugging Face Spaces**
+1. Buat Space baru di huggingface.co, pilih SDK **Docker**.
+2. Di repo Space, salin isi repo ini (`Dockerfile`, `backend/`, `frontend/`) dan
+   tambahkan front matter ini di paling atas `README.md` milik Space:
+   ```
+   ---
+   title: LungVision AI
+   sdk: docker
+   app_port: 7860
+   ---
+   ```
+3. Sediakan model: unggah `model_best.pth` ke `backend/weights/` di Space (pakai
+   Git LFS / upload via web), **atau** isi Secret/Variable `MODEL_URL` dengan
+   tautan unduh langsung file `.pth` (mis. dari GitHub Release).
+4. Jika perlu, tambahkan Variable `MODEL_NAME` dan `WINDOW_SIZE`.
+5. Tunggu build selesai, cek `https://USERNAME-NAMA-SPACE.hf.space/api/health`.
+
+**B. Frontend → Vercel**
+1. Edit `frontend/config.js`, isi `window.API_BASE` dengan URL Space di atas.
+2. Commit & push. Vercel membaca `vercel.json` dan menyajikan folder `frontend/`.
+
+Catatan: database SQLite di Space bersifat sementara (hilang saat restart).
+Untuk riwayat permanen gunakan database eksternal (mis. Neon).

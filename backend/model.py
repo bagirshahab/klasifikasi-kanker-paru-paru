@@ -135,7 +135,26 @@ class LungClassifier:
         self.load_error: str | None = None
         self._try_load()
 
+    def _download_weights(self) -> None:
+        """Unduh bobot dari MODEL_URL jika file belum ada (untuk hosting)."""
+        url = os.getenv("MODEL_URL")
+        if not url or os.path.exists(self.weights_path):
+            return
+        import urllib.request
+
+        os.makedirs(os.path.dirname(self.weights_path), exist_ok=True)
+        tmp_path = self.weights_path + ".part"
+        print(f"[model] Mengunduh bobot dari MODEL_URL ...")
+        try:
+            urllib.request.urlretrieve(url, tmp_path)
+            os.replace(tmp_path, self.weights_path)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[model] Gagal mengunduh bobot: {exc}")
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+
     def _try_load(self) -> None:
+        self._download_weights()
         if not os.path.exists(self.weights_path):
             self.load_error = (
                 f"File bobot model tidak ditemukan di: {self.weights_path}. "
