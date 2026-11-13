@@ -3,6 +3,10 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 
+# Bobot model diunduh otomatis saat server pertama jalan (Google Drive, 110 MB).
+# Bisa ditimpa lewat Variable MODEL_URL di Settings Space.
+ENV MODEL_URL="https://drive.usercontent.google.com/download?id=1N5FdfN1W1jfnq1UplPbpyPdb19HeeLlG&export=download&confirm=t"
+
 WORKDIR /app
 
 # PyTorch versi CPU (lebih kecil dari paket default)

@@ -76,7 +76,9 @@ def build_model() -> nn.Module:
     """Bangun arsitektur Swin Transformer dengan head 3 kelas."""
     kwargs = {}
     # Window size kustom (mis. WINDOW_SIZE=3). Kosongkan untuk bawaan arsitektur.
-    window_size = os.getenv("WINDOW_SIZE")
+    # Default 3 = konfigurasi terbaik penelitian (terverifikasi dari checkpoint:
+    # relative_position_bias_table berukuran (2*3-1)^2 = 25).
+    window_size = os.getenv("WINDOW_SIZE", "3")
     if window_size:
         kwargs["window_size"] = int(window_size)
     model = timm.create_model(
@@ -146,7 +148,11 @@ class LungClassifier:
         tmp_path = self.weights_path + ".part"
         print(f"[model] Mengunduh bobot dari MODEL_URL ...")
         try:
-            urllib.request.urlretrieve(url, tmp_path)
+            import shutil
+
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=300) as resp, open(tmp_path, "wb") as out:
+                shutil.copyfileobj(resp, out)
             os.replace(tmp_path, self.weights_path)
         except Exception as exc:  # noqa: BLE001
             print(f"[model] Gagal mengunduh bobot: {exc}")

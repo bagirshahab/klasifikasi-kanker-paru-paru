@@ -214,10 +214,11 @@ dan SQLite tidak bisa ditulis). Karena itu hosting dipisah:
    app_port: 7860
    ---
    ```
-3. Sediakan model: unggah `model_best.pth` ke `backend/weights/` di Space (pakai
-   Git LFS / upload via web), **atau** isi Secret/Variable `MODEL_URL` dengan
-   tautan unduh langsung file `.pth` (mis. dari GitHub Release).
-4. Jika perlu, tambahkan Variable `MODEL_NAME` dan `WINDOW_SIZE`.
+3. Model: **tidak perlu diunggah manual.** `Dockerfile` sudah berisi `MODEL_URL`
+   (Google Drive) dan bobot diunduh otomatis saat server pertama jalan. Untuk
+   memakai model lain, timpa Variable `MODEL_URL` di Settings Space.
+4. Arsitektur default sudah sesuai checkpoint (Swin-Tiny, window 3). Variable
+   `MODEL_NAME` / `WINDOW_SIZE` hanya perlu diisi jika modelnya diganti.
 5. Tunggu build selesai, cek `https://USERNAME-NAMA-SPACE.hf.space/api/health`.
 
 **B. Frontend → Vercel**
