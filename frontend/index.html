@@ -17,7 +17,7 @@
     </div>
     <div class="model-status" id="modelStatus">
       <span class="status-dot" id="statusDot"></span>
-      <span id="statusText">Memeriksa model&hellip;</span>
+      <span id="statusText">Menyiapkan model&hellip;</span>
     </div>
   </header>
 
@@ -30,7 +30,14 @@
         <strong>LUSC</strong> (Squamous Cell Carcinoma). Model menggunakan arsitektur
         Swin Transformer dengan mekanisme <em>shifted window</em>.
       </p>
+      <p class="privacy">
+        Model berjalan sepenuhnya di browser Anda. Citra tidak diunggah ke server mana pun.
+      </p>
     </section>
+
+    <div class="loadbar" id="loadBar" hidden>
+      <div class="loadbar-fill" id="loadFill"></div>
+    </div>
 
     <div class="grid">
       <!-- Panel upload -->
@@ -81,16 +88,14 @@
     <!-- Info model -->
     <section class="card model-card">
       <h3>Tentang Model</h3>
-      <div class="model-info" id="modelInfo">
-        <p class="muted">Memuat info model&hellip;</p>
-      </div>
+      <div class="model-info" id="modelInfo"></div>
     </section>
 
     <!-- Riwayat -->
     <section class="card">
       <div class="card-head">
-        <h3>Riwayat Prediksi Terakhir</h3>
-        <button id="refreshHistory" class="btn btn-ghost btn-sm">Muat ulang</button>
+        <h3>Riwayat Prediksi (tersimpan di browser ini)</h3>
+        <button id="clearHistory" class="btn btn-ghost btn-sm">Hapus riwayat</button>
       </div>
       <div class="table-wrap">
         <table class="history-table">
@@ -121,6 +126,7 @@
     <p>LungVision AI &middot; Swin Transformer &middot; Dataset LungHist700</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
