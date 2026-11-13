@@ -58,9 +58,24 @@ body {
 
 /* Layout */
 .container { max-width: 1040px; margin: 0 auto; padding: 28px 20px 60px; }
-.intro { margin-bottom: 22px; }
-.intro h2 { font-size: 1.5rem; margin-bottom: 8px; }
-.intro p { color: var(--muted); max-width: 760px; }
+.intro {
+  margin-bottom: 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+}
+.intro h2 { font-size: 1.5rem; margin-bottom: 10px; }
+.intro p {
+  color: #475569;
+  line-height: 1.75;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
 
 .grid {
   display: grid;
@@ -175,6 +190,5 @@ body {
 .footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 24px; }
 
 /* Privasi + progres unduh model */
-.privacy { margin-top: 8px; font-size: 0.85rem; color: #166534; }
 .loadbar { height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
 .loadbar-fill { height: 100%; width: 0; background: var(--primary); transition: width 0.2s; }
