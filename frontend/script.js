@@ -36,9 +36,14 @@ const MODEL_META = {
 // DOM
 const $ = (id) => document.getElementById(id);
 const dropzone = $("dropzone");
-const dropzoneInner = $("dropzoneInner");
+const dropIcon = $("dropIcon");
+const dropTitle = $("dropTitle");
+const dropHint = $("dropHint");
 const fileInput = $("fileInput");
-const preview = $("preview");
+
+const EMPTY_DEFAULT = $("resultEmpty").innerHTML;
+const DROP_TITLE_DEFAULT = dropTitle.innerHTML;
+const DROP_HINT_DEFAULT = dropHint.innerHTML;
 const predictBtn = $("predictBtn");
 const resetBtn = $("resetBtn");
 const resultEmpty = $("resultEmpty");
@@ -215,13 +220,10 @@ function handleFile(file) {
     return;
   }
   selectedFile = file;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    preview.src = e.target.result;
-    preview.hidden = false;
-    dropzoneInner.hidden = true;
-  };
-  reader.readAsDataURL(file);
+  dropzone.classList.add("has-file");
+  dropIcon.textContent = "\u2713";
+  dropTitle.textContent = file.name;
+  dropHint.textContent = `${(file.size / 1024).toFixed(0)} KB \u00b7 klik untuk mengganti citra`;
   predictBtn.disabled = !session;
   resetBtn.disabled = false;
 }
@@ -229,13 +231,15 @@ function handleFile(file) {
 resetBtn.addEventListener("click", () => {
   selectedFile = null;
   fileInput.value = "";
-  preview.src = "";
-  preview.hidden = true;
-  dropzoneInner.hidden = false;
+  dropzone.classList.remove("has-file");
+  dropIcon.textContent = "\u21e7";
+  dropTitle.innerHTML = DROP_TITLE_DEFAULT;
+  dropHint.innerHTML = DROP_HINT_DEFAULT;
   predictBtn.disabled = true;
   resetBtn.disabled = true;
   resultBox.hidden = true;
   resultLoading.hidden = true;
+  resultEmpty.innerHTML = EMPTY_DEFAULT;
   resultEmpty.hidden = false;
 });
 

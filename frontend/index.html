@@ -43,11 +43,10 @@
         <div class="dropzone" id="dropzone">
           <input type="file" id="fileInput" accept="image/*" hidden />
           <div class="dropzone-inner" id="dropzoneInner">
-            <div class="upload-icon">&#8679;</div>
-            <p><strong>Klik</strong> atau seret citra ke sini</p>
-            <span class="hint">Format: JPG, PNG &middot; Citra H&amp;E histopatologi</span>
+            <div class="upload-icon" id="dropIcon">&#8679;</div>
+            <p id="dropTitle"><strong>Klik</strong> atau seret citra ke sini</p>
+            <span class="hint" id="dropHint">Format: JPG, PNG &middot; Citra H&amp;E histopatologi</span>
           </div>
-          <img id="preview" class="preview" alt="Pratinjau citra" hidden />
         </div>
         <div class="actions">
           <button id="predictBtn" class="btn btn-primary" disabled>Klasifikasikan</button>
