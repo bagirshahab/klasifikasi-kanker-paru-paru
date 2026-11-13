@@ -36,14 +36,23 @@ const MODEL_META = {
 // DOM
 const $ = (id) => document.getElementById(id);
 const dropzone = $("dropzone");
-const dropIcon = $("dropIcon");
-const dropTitle = $("dropTitle");
-const dropHint = $("dropHint");
+const dropzoneInner = $("dropzoneInner");
+const preview = $("preview");
+const fileName = $("fileName");
 const fileInput = $("fileInput");
 
 const EMPTY_DEFAULT = $("resultEmpty").innerHTML;
-const DROP_TITLE_DEFAULT = dropTitle.innerHTML;
-const DROP_HINT_DEFAULT = dropHint.innerHTML;
+let previewUrl = null;
+
+function clearPreview() {
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = null;
+  preview.removeAttribute("src");
+  preview.hidden = true;
+  fileName.hidden = true;
+  dropzoneInner.hidden = false;
+  dropzone.classList.remove("has-file");
+}
 const predictBtn = $("predictBtn");
 const resetBtn = $("resetBtn");
 const resultEmpty = $("resultEmpty");
@@ -220,10 +229,18 @@ function handleFile(file) {
     return;
   }
   selectedFile = file;
+  clearPreview();
+  previewUrl = URL.createObjectURL(file);
+  preview.onerror = () => {
+    clearPreview();
+    showError("Citra tidak dapat ditampilkan. Pastikan file berformat JPG atau PNG.");
+  };
+  preview.src = previewUrl;
+  preview.hidden = false;
+  dropzoneInner.hidden = true;
   dropzone.classList.add("has-file");
-  dropIcon.textContent = "\u2713";
-  dropTitle.textContent = file.name;
-  dropHint.textContent = `${(file.size / 1024).toFixed(0)} KB \u00b7 klik untuk mengganti citra`;
+  fileName.textContent = `${file.name} \u00b7 ${(file.size / 1024).toFixed(0)} KB \u00b7 klik citra untuk mengganti`;
+  fileName.hidden = false;
   predictBtn.disabled = !session;
   resetBtn.disabled = false;
 }
@@ -231,10 +248,7 @@ function handleFile(file) {
 resetBtn.addEventListener("click", () => {
   selectedFile = null;
   fileInput.value = "";
-  dropzone.classList.remove("has-file");
-  dropIcon.textContent = "\u21e7";
-  dropTitle.innerHTML = DROP_TITLE_DEFAULT;
-  dropHint.innerHTML = DROP_HINT_DEFAULT;
+  clearPreview();
   predictBtn.disabled = true;
   resetBtn.disabled = true;
   resultBox.hidden = true;

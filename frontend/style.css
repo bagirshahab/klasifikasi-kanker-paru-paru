@@ -117,9 +117,9 @@ body {
 .dropzone-inner { padding: 20px; color: var(--muted); }
 .upload-icon { font-size: 2.2rem; color: var(--primary); }
 .hint { display: block; font-size: 0.78rem; margin-top: 6px; }
-.dropzone.has-file { border-style: solid; border-color: var(--primary); background: #eff6ff; }
-.dropzone.has-file .upload-icon { color: var(--normal); }
-.dropzone-inner p { word-break: break-all; }
+.dropzone.has-file { border-style: solid; border-color: var(--primary); background: #eff6ff; padding: 10px; }
+.preview { display: block; max-width: 100%; max-height: 300px; border-radius: 10px; }
+.file-name { margin-top: 10px; font-size: 0.85rem; color: var(--muted); word-break: break-all; }
 
 .actions { display: flex; gap: 10px; margin-top: 16px; }
 
