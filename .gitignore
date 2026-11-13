@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Model weights (biasanya besar — gunakan Git LFS atau rilis terpisah)
+backend/weights/*.pth
+backend/weights/*.pt
+
+# Database SQLite (data runtime)
+backend/data/*.db
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LungVision AI — Klasifikasi Kanker Paru (Swin Transformer)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-dot"></span>
+      <div>
+        <h1>LungVision AI</h1>
+        <p>Klasifikasi Histopatologi Kanker Paru &mdash; Swin Transformer</p>
+      </div>
+    </div>
+    <div class="model-status" id="modelStatus">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Memeriksa model&hellip;</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Klasifikasi Subtipe Kanker Paru</h2>
+      <p>
+        Unggah citra histopatologi (pewarnaan H&amp;E) untuk diklasifikasikan ke dalam tiga kelas:
+        <strong>Normal</strong>, <strong>LUAD</strong> (Adenocarcinoma), atau
+        <strong>LUSC</strong> (Squamous Cell Carcinoma). Model menggunakan arsitektur
+        Swin Transformer dengan mekanisme <em>shifted window</em>.
+      </p>
+    </section>
+
+    <div class="grid">
+      <!-- Panel upload -->
+      <section class="card">
+        <h3>Unggah Citra</h3>
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept="image/*" hidden />
+          <div class="dropzone-inner" id="dropzoneInner">
+            <div class="upload-icon">&#8679;</div>
+            <p><strong>Klik</strong> atau seret citra ke sini</p>
+            <span class="hint">Format: JPG, PNG &middot; Citra H&amp;E histopatologi</span>
+          </div>
+          <img id="preview" class="preview" alt="Pratinjau citra" hidden />
+        </div>
+        <div class="actions">
+          <button id="predictBtn" class="btn btn-primary" disabled>Klasifikasikan</button>
+          <button id="resetBtn" class="btn btn-ghost" disabled>Reset</button>
+        </div>
+      </section>
+
+      <!-- Panel hasil -->
+      <section class="card">
+        <h3>Hasil Klasifikasi</h3>
+        <div id="resultEmpty" class="result-empty">
+          <p>Belum ada hasil. Unggah citra lalu klik <strong>Klasifikasikan</strong>.</p>
+        </div>
+
+        <div id="resultLoading" class="result-loading" hidden>
+          <div class="spinner"></div>
+          <p>Menganalisis citra&hellip;</p>
+        </div>
+
+        <div id="resultBox" class="result-box" hidden>
+          <div class="result-headline">
+            <span class="result-label">Prediksi</span>
+            <span class="result-class" id="predClass">&mdash;</span>
+            <span class="result-sub" id="predSub"></span>
+          </div>
+          <div class="confidence">
+            Keyakinan: <strong id="confidenceVal">&mdash;</strong>
+          </div>
+          <div class="probs" id="probs"></div>
+          <div class="result-note" id="resultNote"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Info model -->
+    <section class="card model-card">
+      <h3>Tentang Model</h3>
+      <div class="model-info" id="modelInfo">
+        <p class="muted">Memuat info model&hellip;</p>
+      </div>
+    </section>
+
+    <!-- Riwayat -->
+    <section class="card">
+      <div class="card-head">
+        <h3>Riwayat Prediksi Terakhir</h3>
+        <button id="refreshHistory" class="btn btn-ghost btn-sm">Muat ulang</button>
+      </div>
+      <div class="table-wrap">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama File</th>
+              <th>Prediksi</th>
+              <th>Keyakinan</th>
+              <th>Waktu</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="5" class="muted">Belum ada riwayat.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="disclaimer">
+      <strong>Catatan:</strong> Alat ini untuk keperluan riset dan edukasi.
+      Hasil klasifikasi bukan diagnosis medis dan tidak menggantikan penilaian
+      ahli patologi.
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>LungVision AI &middot; Swin Transformer &middot; Dataset LungHist700</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
