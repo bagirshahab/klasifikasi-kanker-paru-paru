@@ -1,4 +1,4 @@
-# LungVision AI — Klasifikasi Kanker Paru (Swin Transformer)
+# Lung Cancer Classification Swin Transformer
 
 Website klasifikasi subtipe kanker paru pada citra histopatologi H&E:
 **Normal**, **LUAD** (Adenocarcinoma), **LUSC** (Squamous Cell Carcinoma).
